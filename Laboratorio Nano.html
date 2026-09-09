@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio Nanotecnológico de Muestras</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-page: #f4f6f9;
+      --bg-card: #ffffff;
+      --bg-accent: #eef3f8;
+      
+      --blue-main: #1d4ed8;
+      --blue-dark: #0f172a;
+      --blue-light: #eff6ff;
+      --blue-border: #bfdbfe;
+      
+      --gray-border: #cbd5e1;
+      --gray-light: #f1f5f9;
+      --gray-text: #334155;
+      --gray-muted: #64748b;
+      
+      --green-main: #15803d;
+      --green-light: #f0fdf4;
+      --green-border: #bbf7d0;
+      
+      --amber-main: #b45309;
+      --amber-light: #fffbeb;
+      --amber-border: #fde68a;
+      
+      --red-main: #b91c1c;
+      --red-light: #fef2f2;
+      --red-border: #fecaca;
+
+      --font-sans: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--gray-text);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    /* ENCABEZADO INSTITUCIONAL */
+    header {
+      background: #ffffff;
+      border-bottom: 2px solid #e2e8f0;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--blue-main);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      letter-spacing: -0.3px;
+    }
+
+    .brand-subtitle {
+      font-size: 0.85rem;
+      color: var(--gray-muted);
+    }
+
+    .sample-badge-header {
+      background: var(--bg-accent);
+      border: 1px solid var(--gray-border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--blue-dark);
+    }
+
+    /* BARRA DE PASOS / NAVEGACIÓN */
+    .stepper-bar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--gray-border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      overflow-x: auto;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.825rem;
+      font-weight: 500;
+      color: var(--gray-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: transparent;
+      white-space: nowrap;
+    }
+
+    .step-item.active {
+      color: var(--blue-main);
+      background: var(--blue-light);
+      font-weight: 700;
+    }
+
+    .step-item.completed {
+      color: var(--green-main);
+    }
+
+    .step-number {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1px solid currentColor;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    main {
+      flex: 1;
+      max-width: 900px;
+      width: 100%;
+      margin: 1.5rem auto;
+      padding: 0 1rem;
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--gray-border);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .panel-header {
+      background: var(--gray-light);
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--gray-border);
+    }
+
+    .panel-header h2 {
+      font-size: 1.15rem;
+      color: var(--blue-dark);
+      font-weight: 700;
+    }
+
+    .panel-body {
+      padding: 1.5rem;
+    }
+
+    /* MENSAJES Y NOTAS EDUCATIVAS */
+    .info-box {
+      background: var(--blue-light);
+      border: 1px solid var(--blue-border);
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.95rem;
+      color: #1e3a8a;
+    }
+
+    .warning-box {
+      background: var(--amber-light);
+      border: 1px solid var(--amber-border);
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.95rem;
+      color: #78350f;
+    }
+
+    /* FORMULARIOS Y SELECCIONES */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--blue-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .input-field, .textarea-field {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid var(--gray-border);
+      border-radius: 6px;
+      padding: 0.65rem 0.85rem;
+      color: var(--gray-text);
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+    }
+
+    .input-field:focus, .textarea-field:focus {
+      outline: none;
+      border-color: var(--blue-main);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+    }
+
+    .textarea-field {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.4rem;
+    }
+
+    .option-card {
+      background: var(--bg-card);
+      border: 1px solid var(--gray-border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      transition: background 0.15s;
+    }
+
+    .option-card:hover {
+      background: var(--gray-light);
+    }
+
+    .option-card input[type="radio"] {
+      accent-color: var(--blue-main);
+      width: 16px;
+      height: 16px;
+    }
+
+    /* BOTONES */
+    .btn {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.65rem 1.25rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--blue-main);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      opacity: 0.95;
+    }
+
+    .btn-secondary {
+      background: var(--gray-light);
+      border: 1px solid var(--gray-border);
+      color: var(--gray-text);
+    }
+
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+
+    .actions-bar {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--gray-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* VISUALIZACIÓN DE LA MUESTRA */
+    .sample-preview-container {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 640px) {
+      .sample-preview-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .graphic-box {
+      background: #ffffff;
+      border: 1px solid var(--gray-border);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .graphic-canvas {
+      height: 160px;
+      background: var(--gray-light);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .particle-shape {
+      transition: all 0.3s;
+    }
+
+    .shape-nano-nano {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--blue-main);
+    }
+
+    .shape-micro {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #64748b;
+    }
+
+    .shape-irregular {
+      width: 50px;
+      height: 40px;
+      background: #475569;
+      clip-path: polygon(20% 0%, 80% 10%, 100% 70%, 60% 100%, 0% 80%);
+    }
+
+    .graphic-caption {
+      font-size: 0.75rem;
+      color: var(--gray-muted);
+      font-style: italic;
+    }
+
+    /* CATALOGO DE MUESTRAS */
+    .sample-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .sample-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--gray-border);
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--blue-dark);
+    }
+
+    .sample-btn:hover {
+      border-color: var(--blue-main);
+      background: var(--blue-light);
+    }
+
+    /* COMPARACIÓN IA VS DATOS */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 600px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .comparison-card {
+      border: 1px solid var(--gray-border);
+      border-radius: 6px;
+      padding: 1rem;
+      background: #ffffff;
+    }
+
+    .comparison-card h4 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--gray-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .comparison-card ul {
+      list-style-type: none;
+      font-size: 0.9rem;
+    }
+
+    .comparison-card li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* TARJETA DE CONCLUSIÓN */
+    .summary-card {
+      background: var(--green-light);
+      border: 1px solid var(--green-border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .summary-card h3 {
+      color: var(--green-main);
+      font-size: 1.05rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .summary-item {
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .summary-item strong {
+      color: var(--blue-dark);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ENCABEZADO -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🔬</div>
+      <div>
+        <div class="brand-title">LABORATORIO NANOTECNOLÓGICO DE MUESTRAS</div>
+        <div class="brand-subtitle">Observación, análisis y clasificación de materiales</div>
+      </div>
+    </div>
+    <div class="sample-badge-header">
+      Muestra: <span id="header-sample-id">N-04</span>
+    </div>
+  </header>
+
+  <!-- BARRA DE PASOS -->
+  <div class="stepper-bar">
+    <div class="step-item active" id="step-1">
+      <div class="step-number">1</div>
+      <span>IDENTIFICAMOS</span>
+    </div>
+    <div class="step-item" id="step-2">
+      <div class="step-number">2</div>
+      <span>OBSERVAMOS</span>
+    </div>
+    <div class="step-item" id="step-3">
+      <div class="step-number">3</div>
+      <span>PENSAMOS</span>
+    </div>
+    <div class="step-item" id="step-4">
+      <div class="step-number">4</div>
+      <span>CONSULTAMOS A LA IA</span>
+    </div>
+    <div class="step-item" id="step-5">
+      <div class="step-number">5</div>
+      <span>REVISAMOS</span>
+    </div>
+    <div class="step-item" id="step-6">
+      <div class="step-number">6</div>
+      <span>CONCLUIMOS</span>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ETAPA 1 -->
+    <section id="panel-1" class="panel active">
+      <div class="panel-header">
+        <h2>01. Identificamos la muestra</h2>
+      </div>
+      <div class="panel-body">
+        
+        <div class="info-box">
+          Tenemos una muestra identificada con un código. Ingresemos ese código para comenzar nuestro análisis.
+        </div>
+
+        <div style="max-width: 480px; margin: 1.5rem auto;">
+          <div class="form-group">
+            <label for="sample-code-input">Código de muestra:</label>
+            <input type="text" id="sample-code-input" class="input-field" placeholder="Ejemplo: N-04" style="text-transform: uppercase; font-size: 1.05rem;">
+          </div>
+
+          <div style="font-size: 0.85rem; color: var(--gray-muted); margin-bottom: 0.4rem;">
+            Muestras disponibles en el laboratorio:
+          </div>
+          <div class="sample-buttons">
+            <button class="sample-btn" onclick="selectQuickSample('N-01')">N-01</button>
+            <button class="sample-btn" onclick="selectQuickSample('N-02')">N-02</button>
+            <button class="sample-btn" onclick="selectQuickSample('N-03')">N-03</button>
+            <button class="sample-btn" onclick="selectQuickSample('N-04')">N-04</button>
+            <button class="sample-btn" onclick="selectQuickSample('N-05')">N-05</button>
+          </div>
+
+          <div id="error-message" style="display: none; margin-top: 1rem;" class="warning-box">
+            No encontramos una muestra con ese código. Revisemos el número ingresado.
+          </div>
+
+          <div id="success-message" style="display: none; margin-top: 1rem;" class="info-box">
+            Muestra registrada correctamente.
+          </div>
+
+          <div class="actions-bar" style="justify-content: flex-end;">
+            <button class="btn btn-primary" onclick="registerSample()">Ingresar Muestra →</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ETAPA 2 -->
+    <section id="panel-2" class="panel">
+      <div class="panel-header">
+        <h2>02. Observamos la muestra</h2>
+      </div>
+      <div class="panel-body">
+
+        <div class="info-box">
+          Antes de consultar a la IA, observamos y registramos lo que sabemos de la muestra.
+        </div>
+
+        <div class="sample-preview-container">
+          <div class="graphic-box">
+            <div class="graphic-canvas">
+              <div id="sample-graphic-element" class="particle-shape shape-nano-nano"></div>
+            </div>
+            <div class="graphic-caption">Representación de la muestra</div>
+            <div id="graphic-scale-label" style="font-size: 0.85rem; font-weight: bold; margin-top: 0.4rem; color: var(--blue-dark);">Escala: 45 nm</div>
+          </div>
+
+          <div>
+            <div class="form-group">
+              <label>1. Tamaño o escala de la partícula:</label>
+              <div class="options-list">
+                <label class="option-card">
+                  <input type="radio" name="scale_obs" value="Escala nanométrica (menor a 100 nm)">
+                  <span>Escala nanométrica (menor a 100 nm)</span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="scale_obs" value="Escala micrométrica (mayor a 1 µm)">
+                  <span>Escala micrométrica (mayor a 1 µm)</span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="scale_obs" value="Información insuficiente">
+                  <span>Información insuficiente</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>2. Forma observada:</label>
+              <div class="options-list">
+                <label class="option-card">
+                  <input type="radio" name="shape_obs" value="Redonda o esférica">
+                  <span>Redonda o esférica</span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="shape_obs" value="Irregular">
+                  <span>Irregular</span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="shape_obs" value="Laminar (en capas)">
+                  <span>Laminar (en capas)</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>3. ¿Es atraída por un imán?</label>
+              <div class="options-list">
+                <label class="option-card">
+                  <input type="radio" name="mag_obs" value="Sí, responde al imán">
+                  <span>Sí, responde al imán</span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="mag_obs" value="No responde al imán">
+                  <span>No responde al imán</span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="mag_obs" value="No se pudo determinar">
+                  <span>No se pudo determinar</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="other-obs">4. Otras observaciones:</label>
+              <textarea id="other-obs" class="textarea-field" placeholder="Anotamos cualquier otro detalle que hayamos visto en la muestra..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions-bar">
+          <button class="btn btn-secondary" onclick="goToStep(1)">← Volver</button>
+          <button class="btn btn-primary" onclick="saveObservations()">Guardar observaciones →</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ETAPA 3 -->
+    <section id="panel-3" class="panel">
+      <div class="panel-header">
+        <h2>03. Pensamos una hipótesis</h2>
+      </div>
+      <div class="panel-body">
+
+        <div class="info-box">
+          Con los datos que registramos, pensamos qué tipo de material podría ser antes de consultar a la IA.
+        </div>
+
+        <div style="background: var(--gray-light); padding: 1rem; border-radius: 6px; margin-bottom: 1.25rem;">
+          <div style="font-size: 0.85rem; font-weight: 600; color: var(--gray-muted); margin-bottom: 0.3rem;">NUESTRAS EVIDENCIAS REGISTRADAS:</div>
+          <div id="hypo-evidence-summary" style="font-size: 0.95rem; color: var(--blue-dark);"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="hypo-type">1. ¿Qué creemos que puede ser?</label>
+          <select id="hypo-type" class="input-field">
+            <option value="">-- Seleccionamos una opción --</option>
+            <option value="un nanomaterial magnético">Un nanomaterial magnético</option>
+            <option value="un nanomaterial no magnético">Un nanomaterial no magnético</option>
+            <option value="un material de tamaño común (micrométrico)">Un material de tamaño común (micrométrico)</option>
+            <option value="un material no identificado">Un material que requiere más información</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="hypo-reason">2. ¿Por qué pensamos eso?</label>
+          <textarea id="hypo-reason" class="textarea-field" placeholder="Explicamos nuestra idea basándonos en el tamaño y si responde o no al imán..."></textarea>
+        </div>
+
+        <div class="actions-bar">
+          <button class="btn btn-secondary" onclick="goToStep(2)">← Volver</button>
+          <button class="btn btn-primary" onclick="saveHypothesis()">Confirmar nuestra hipótesis →</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ETAPA 4 -->
+    <section id="panel-4" class="panel">
+      <div class="panel-header">
+        <h2>04. Consultamos a la IA</h2>
+      </div>
+      <div class="panel-body">
+
+        <div class="warning-box">
+          <strong>Recordemos:</strong> La IA analizará solamente los datos que registramos. Su respuesta es una propuesta y puede equivocarse.
+        </div>
+
+        <div class="comparison-grid">
+          <div class="comparison-card">
+            <h4>Datos que le damos a la IA</h4>
+            <ul id="ai-given-data"></ul>
+          </div>
+          <div class="comparison-card" style="background: var(--blue-light); border-color: var(--blue-border);">
+            <h4 style="color: var(--blue-main);">¿Qué propone la IA?</h4>
+            <div id="ai-proposal-text" style="font-size: 0.95rem; font-weight: 500; color: var(--blue-dark); margin-bottom: 0.5rem;"></div>
+            <div id="ai-reasoning-text" style="font-size: 0.875rem; color: var(--gray-text);"></div>
+          </div>
+        </div>
+
+        <div id="ai-missing-data-box" class="warning-box" style="display: none;">
+          <strong>¿Qué información falta?</strong>
+          <div id="ai-missing-data-text" style="font-size: 0.9rem; margin-top: 0.2rem;"></div>
+        </div>
+
+        <div class="actions-bar">
+          <button class="btn btn-secondary" onclick="goToStep(3)">← Volver</button>
+          <button class="btn btn-primary" onclick="goToStep(5)">Revisar la propuesta →</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ETAPA 5 -->
+    <section id="panel-5" class="panel">
+      <div class="panel-header">
+        <h2>05. Revisamos la respuesta</h2>
+      </div>
+      <div class="panel-body">
+
+        <div class="info-box">
+          Ahora comparamos la propuesta de la IA con las evidencias que tenemos.
+        </div>
+
+        <div class="form-group">
+          <label>¿Qué decidimos sobre la propuesta de la IA?</label>
+          <div class="options-list">
+            <label class="option-card" onclick="selectRevisionOption('agree')">
+              <input type="radio" name="rev_choice" value="agree">
+              <div>
+                <strong>ESTAMOS DE ACUERDO</strong>
+                <div style="font-size: 0.85rem; color: var(--gray-muted);">La propuesta coincide con nuestras evidencias.</div>
+              </div>
+            </label>
+
+            <label class="option-card" onclick="selectRevisionOption('disagree')">
+              <input type="radio" name="rev_choice" value="disagree">
+              <div>
+                <strong>NO ESTAMOS DE ACUERDO</strong>
+                <div style="font-size: 0.85rem; color: var(--gray-muted);">Encontramos una contradicción entre lo que propone la IA y los datos.</div>
+              </div>
+            </label>
+
+            <label class="option-card" onclick="selectRevisionOption('need_info')">
+              <input type="radio" name="rev_choice" value="need_info">
+              <div>
+                <strong>NECESITAMOS MÁS INFORMACIÓN</strong>
+                <div style="font-size: 0.85rem; color: var(--gray-muted);">Los datos actuales son insuficientes para estar seguros.</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div id="rev-explanation-box" class="info-box" style="display: none; background: #ffffff; border-color: var(--gray-border);">
+          <strong>Una respuesta de IA no reemplaza las evidencias.</strong> Necesitamos revisar si lo que propone coincide exactamente con los datos.
+        </div>
+
+        <div id="disagree-reason-group" class="form-group" style="display: none;">
+          <label for="disagree-text">¿Por qué no estamos de acuerdo?</label>
+          <textarea id="disagree-text" class="textarea-field" placeholder="Explicamos qué dato contradice a la IA (por ejemplo: la escala no es nanométrica)..."></textarea>
+        </div>
+
+        <div class="actions-bar">
+          <button class="btn btn-secondary" onclick="goToStep(4)">← Volver</button>
+          <button class="btn btn-primary" onclick="saveRevision()">Ir a la conclusión final →</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ETAPA 6 -->
+    <section id="panel-6" class="panel">
+      <div class="panel-header">
+        <h2>06. Construimos nuestra conclusión</h2>
+      </div>
+      <div class="panel-body">
+
+        <div id="conclusion-form-wrapper">
+          <div class="info-box">
+            Ahora construimos nuestra conclusión a partir de las evidencias que tenemos.
+          </div>
+
+          <div class="form-group">
+            <label for="final-type-input">1. ¿Qué creemos que es la muestra?</label>
+            <input type="text" id="final-type-input" class="input-field" placeholder="Ejemplo: Nanomaterial magnético">
+          </div>
+
+          <div class="form-group">
+            <label for="final-evidence-input">2. ¿Qué datos apoyan nuestra idea?</label>
+            <textarea id="final-evidence-input" class="textarea-field" placeholder="Escribimos las evidencias que confirman nuestra conclusión..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="final-property-input">3. ¿Qué propiedad del material consideramos importante?</label>
+            <input type="text" id="final-property-input" class="input-field" placeholder="Ejemplo: Responde a un imán">
+          </div>
+
+          <div class="form-group">
+            <label for="final-use-input">4. ¿Para qué podría servir?</label>
+            <input type="text" id="final-use-input" class="input-field" placeholder="Ejemplo: Separación de contaminantes mediante un imán">
+          </div>
+
+          <div class="actions-bar">
+            <button class="btn btn-secondary" onclick="goToStep(5)">← Volver</button>
+            <button class="btn btn-primary" onclick="generateFinalSummary()">Guardar y finalizar →</button>
+          </div>
+        </div>
+
+        <!-- VISTA DE FINALIZACIÓN EN PANTALLA -->
+        <div id="final-summary-wrapper" style="display: none;">
+          
+          <div style="text-align: center; margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1.25rem; color: var(--blue-dark);">ANÁLISIS FINALIZADO</h3>
+            <p style="font-size: 0.95rem; color: var(--gray-muted); margin-top: 0.3rem;">
+              Hemos completado el análisis de la muestra. A partir de nuestras observaciones, de las evidencias disponibles y de la revisión de la propuesta de IA, construimos nuestra conclusión.
+            </p>
+          </div>
+
+          <div class="summary-card">
+            <h3>CONCLUSIÓN DE LA MUESTRA (<span id="sum-sample-id">N-04</span>)</h3>
+            
+            <div class="summary-item">
+              <strong>Nuestra conclusión:</strong>
+              <div id="sum-type">-</div>
+            </div>
+
+            <div class="summary-item">
+              <strong>Evidencia principal:</strong>
+              <div id="sum-evidence">-</div>
+            </div>
+
+            <div class="summary-item">
+              <strong>Propiedad importante:</strong>
+              <div id="sum-property">-</div>
+            </div>
+
+            <div class="summary-item">
+              <strong>Posible aplicación:</strong>
+              <div id="sum-use">-</div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-accent); border: 1px solid var(--gray-border); padding: 1rem; border-radius: 6px; margin-top: 1.25rem;">
+            <h4 style="font-size: 0.9rem; color: var(--blue-dark); margin-bottom: 0.3rem;">¿QUÉ APRENDIMOS SOBRE LA MUESTRA?</h4>
+            <p id="learning-relation" style="font-size: 0.9rem; color: var(--gray-text);"></p>
+          </div>
+
+          <div class="info-box" style="margin-top: 1.25rem; background: #ffffff; border-color: var(--blue-border); text-align: center;">
+            <strong>La IA fue una herramienta para analizar la información. La decisión final la tomamos nosotros a partir de las evidencias.</strong>
+          </div>
+
+          <div class="actions-bar" style="justify-content: center; gap: 1rem;">
+            <button class="btn btn-secondary" onclick="resetApp()">Analizar otra muestra</button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // BASE DE DATOS DE MUESTRAS
+    const SAMPLES_DATA = {
+      'N-01': {
+        code: 'N-01',
+        scale: 'Escala nanométrica (menor a 100 nm)',
+        shape: 'Redonda o esférica',
+        magnetic: 'Sí, responde al imán',
+        scaleText: 'Escala: 20 nm',
+        graphicClass: 'shape-nano-nano',
+        aiProposal: 'La evidencia disponible sugiere que podría tratarse de un nanomaterial magnético.',
+        aiReasoning: 'Esta propuesta se basa en que la muestra está en escala nanométrica (20 nm) y responde a un imán.',
+        aiMissingData: null,
+        defaultProperty: 'Respuesta al magnetismo a escala nano',
+        defaultUse: 'Separación mediante imanes en la limpieza de agua'
+      },
+      'N-02': {
+        code: 'N-02',
+        scale: 'Escala micrométrica (mayor a 1 µm)',
+        shape: 'Irregular',
+        magnetic: 'Sí, responde al imán',
+        scaleText: 'Escala: 15 µm',
+        graphicClass: 'shape-micro',
+        aiProposal: 'La evidencia sugiere que es un nanomaterial magnético.',
+        aiReasoning: 'Esta propuesta se basa en que la muestra responde frente a un imán.',
+        aiMissingData: 'ATENCIÓN: La muestra responde a un imán, pero su tamaño es micrométrico (> 1 µm). Que un material sea magnético no significa que sea un nanomaterial. Debemos revisar esta propuesta.',
+        defaultProperty: 'Magnetismo en tamaño común (micrométrico)',
+        defaultUse: 'Filtración común o decantación de partículas grandes'
+      },
+      'N-03': {
+        code: 'N-03',
+        scale: 'Información insuficiente',
+        shape: 'Laminar (en capas)',
+        magnetic: 'No se pudo determinar',
+        scaleText: 'Escala: Desconocida',
+        graphicClass: 'shape-irregular',
+        aiProposal: 'No tenemos información suficiente para proponer una clasificación con seguridad.',
+        aiReasoning: 'Los datos no indican el tamaño exacto ni si responde a un imán.',
+        aiMissingData: 'Falta medir con precisión el tamaño de la muestra y probar si es atraída por un imán.',
+        defaultProperty: 'Estructura en capas',
+        defaultUse: 'Filtro por barrera'
+      },
+      'N-04': {
+        code: 'N-04',
+        scale: 'Escala nanométrica (menor a 100 nm)',
+        shape: 'Redonda o esférica',
+        magnetic: 'Sí, responde al imán',
+        scaleText: 'Escala: 45 nm',
+        graphicClass: 'shape-nano-nano',
+        aiProposal: 'La evidencia disponible sugiere que podría tratarse de un nanomaterial magnético.',
+        aiReasoning: 'Esta propuesta se basa en que la muestra mide menos de 100 nm y es atraída por un imán.',
+        aiMissingData: null,
+        defaultProperty: 'Respuesta al magnetismo',
+        defaultUse: 'Separación magnética de partículas'
+      },
+      'N-05': {
+        code: 'N-05',
+        scale: 'Escala nanométrica (menor a 100 nm)',
+        shape: 'Irregular',
+        magnetic: 'No responde al imán',
+        scaleText: 'Escala: 10 nm',
+        graphicClass: 'shape-irregular',
+        aiProposal: 'Una posibilidad es que sea un nanomaterial no magnético.',
+        aiReasoning: 'Esta propuesta se basa en que el tamaño mide 10 nm pero no presenta atracción por el imán.',
+        aiMissingData: 'No contamos con la composición química del material.',
+        defaultProperty: 'Tamaño nanométrico sin magnetismo',
+        defaultUse: 'Retención de partículas por superficie'
+      }
+    };
+
+    // ESTADO DE LA APLICACIÓN
+    let appState = {
+      currentStep: 1,
+      sampleCode: 'N-04',
+      sampleData: null,
+      observations: {
+        scale: '',
+        shape: '',
+        magnetic: '',
+        other: ''
+      },
+      hypothesis: {
+        type: '',
+        reason: ''
+      },
+      revision: {
+        choice: '',
+        reason: ''
+      }
+    };
+
+    function goToStep(stepNum) {
+      if (stepNum < 1 || stepNum > 6) return;
+
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(`panel-${stepNum}`);
+      if (target) target.classList.add('active');
+
+      document.querySelectorAll('.step-item').forEach((item, idx) => {
+        const num = idx + 1;
+        item.classList.remove('active', 'completed');
+        if (num === stepNum) item.classList.add('active');
+        else if (num < stepNum) item.classList.add('completed');
+      });
+
+      appState.currentStep = stepNum;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectQuickSample(code) {
+      document.getElementById('sample-code-input').value = code;
+      document.getElementById('error-message').style.display = 'none';
+    }
+
+    function registerSample() {
+      const input = document.getElementById('sample-code-input').value.trim().toUpperCase();
+      const errorBox = document.getElementById('error-message');
+      const successBox = document.getElementById('success-message');
+
+      if (!input || !SAMPLES_DATA[input]) {
+        errorBox.style.display = 'block';
+        successBox.style.display = 'none';
+        return;
+      }
+
+      errorBox.style.display = 'none';
+      successBox.style.display = 'block';
+
+      appState.sampleCode = input;
+      appState.sampleData = SAMPLES_DATA[input];
+
+      document.getElementById('header-sample-id').innerText = input;
+      document.getElementById('sum-sample-id').innerText = input;
+
+      // Cargar representación gráfica
+      const elem = document.getElementById('sample-graphic-element');
+      elem.className = 'particle-shape ' + appState.sampleData.graphicClass;
+      document.getElementById('graphic-scale-label').innerText = appState.sampleData.scaleText;
+
+      // Marcar radios predeterminados de observación
+      setRadioValue('scale_obs', appState.sampleData.scale);
+      setRadioValue('shape_obs', appState.sampleData.shape);
+      setRadioValue('mag_obs', appState.sampleData.magnetic);
+
+      setTimeout(() => {
+        goToStep(2);
+      }, 500);
+    }
+
+    function setRadioValue(name, val) {
+      const radios = document.getElementsByName(name);
+      radios.forEach(r => {
+        if (r.value === val) r.checked = true;
+      });
+    }
+
+    function getRadioValue(name) {
+      const selected = document.querySelector(`input[name="${name}"]:checked`);
+      return selected ? selected.value : '';
+    }
+
+    function saveObservations() {
+      const scale = getRadioValue('scale_obs');
+      const shape = getRadioValue('shape_obs');
+      const mag = getRadioValue('mag_obs');
+      const other = document.getElementById('other-obs').value.trim();
+
+      if (!scale || !shape || !mag) {
+        alert("Por favor, completemos las preguntas sobre la muestra antes de continuar.");
+        return;
+      }
+
+      appState.observations = { scale, shape, magnetic: mag, other };
+
+      document.getElementById('hypo-evidence-summary').innerHTML = `
+        • <strong>Tamaño:</strong> ${scale}<br>
+        • <strong>Forma:</strong> ${shape}<br>
+        • <strong>Respuesta al imán:</strong> ${mag}
+      `;
+
+      goToStep(3);
+    }
+
+    function saveHypothesis() {
+      const type = document.getElementById('hypo-type').value;
+      const reason = document.getElementById('hypo-reason').value.trim();
+
+      if (!type || !reason) {
+        alert("Por favor, seleccionemos qué creemos que es la muestra y expliquemos el porqué.");
+        return;
+      }
+
+      appState.hypothesis = { type, reason };
+
+      // Preparar pantalla de IA
+      prepareAiScreen();
+      goToStep(4);
+    }
+
+    function prepareAiScreen() {
+      const obs = appState.observations;
+      const data = appState.sampleData;
+
+      document.getElementById('ai-given-data').innerHTML = `
+        <li>• <strong>Tamaño:</strong> ${obs.scale}</li>
+        <li>• <strong>Forma:</strong> ${obs.shape}</li>
+        <li>• <strong>Respuesta al imán:</strong> ${obs.magnetic}</li>
+      `;
+
+      document.getElementById('ai-proposal-text').innerText = data.aiProposal;
+      document.getElementById('ai-reasoning-text').innerText = data.aiReasoning;
+
+      const missingBox = document.getElementById('ai-missing-data-box');
+      if (data.aiMissingData) {
+        missingBox.style.display = 'block';
+        document.getElementById('ai-missing-data-text').innerText = data.aiMissingData;
+      } else {
+        missingBox.style.display = 'none';
+      }
+    }
+
+    function selectRevisionOption(val) {
+      document.getElementById('rev-explanation-box').style.display = 'block';
+      document.getElementById('disagree-reason-group').style.display = (val === 'disagree') ? 'block' : 'none';
+      appState.revision.choice = val;
+    }
+
+    function saveRevision() {
+      const choice = getRadioValue('rev_choice');
+
+      if (!choice) {
+        alert("Por favor, seleccionemos si estamos de acuerdo, no estamos de acuerdo o necesitamos más información.");
+        return;
+      }
+
+      if (choice === 'disagree') {
+        const reason = document.getElementById('disagree-text').value.trim();
+        if (!reason) {
+          alert("Por favor, indiquemos la razón por la cual no estamos de acuerdo con la propuesta de la IA.");
+          return;
+        }
+        appState.revision.reason = reason;
+      }
+
+      // Preparar campos de conclusión
+      const data = appState.sampleData;
+      document.getElementById('final-type-input').value = appState.hypothesis.type || "Nanomaterial magnético";
+      document.getElementById('final-evidence-input').value = `Observamos que el tamaño es "${appState.observations.scale}" y su respuesta al imán es "${appState.observations.magnetic}".`;
+      document.getElementById('final-property-input').value = data.defaultProperty;
+      document.getElementById('final-use-input').value = data.defaultUse;
+
+      goToStep(6);
+    }
+
+    function generateFinalSummary() {
+      const type = document.getElementById('final-type-input').value.trim();
+      const evidence = document.getElementById('final-evidence-input').value.trim();
+      const prop = document.getElementById('final-property-input').value.trim();
+      const use = document.getElementById('final-use-input').value.trim();
+
+      if (!type || !evidence || !prop || !use) {
+        alert("Por favor, completemos todos los campos para redactar nuestra conclusión.");
+        return;
+      }
+
+      document.getElementById('sum-type').innerText = type;
+      document.getElementById('sum-evidence').innerText = evidence;
+      document.getElementById('sum-property').innerText = prop;
+      document.getElementById('sum-use').innerText = use;
+
+      document.getElementById('learning-relation').innerHTML = `
+        <strong>Material:</strong> ${type}<br>
+        ↓<br>
+        <strong>Propiedad:</strong> ${prop}<br>
+        ↓<br>
+        <strong>Posible uso:</strong> ${use}
+      `;
+
+      document.getElementById('conclusion-form-wrapper').style.display = 'none';
+      document.getElementById('final-summary-wrapper').style.display = 'block';
+    }
+
+    function resetApp() {
+      document.getElementById('sample-code-input').value = '';
+      document.getElementById('conclusion-form-wrapper').style.display = 'block';
+      document.getElementById('final-summary-wrapper').style.display = 'none';
+      document.getElementById('success-message').style.display = 'none';
+      document.getElementById('error-message').style.display = 'none';
+      goToStep(1);
+    }
+
+    // Inicialización por defecto
+    window.onload = function() {
+      selectQuickSample('N-04');
+    };
+  </script>
+</body>
+</html>
